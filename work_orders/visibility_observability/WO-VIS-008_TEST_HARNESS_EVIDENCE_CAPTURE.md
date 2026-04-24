@@ -1,0 +1,71 @@
+# WO-VIS-008: Test Harness and Evidence Capture
+
+**Status:** Draft  
+**Phase:** Visibility and Observability  
+**Primary owner:** QA / Lab / Detection  
+
+## Goal
+
+Create a repeatable way to run visibility scenarios and capture expected telemetry, detections, and evidence.
+
+## Scope
+
+Test harness, fixtures, and evidence capture for Phase 1 visibility. This should support manual and automated validation.
+
+## Deliverables
+
+- Scenario runner scripts for Windows lab machine
+- Scenario definitions for:
+  - browser AI
+  - IDE AI assistant
+  - local Python agent script
+  - local Node agent script
+  - PowerShell automation
+  - normal browser baseline
+  - normal Git/package manager baseline
+- Expected event checklist per scenario
+- Evidence bundle format
+- Test result template
+- Known-good baseline results
+
+## Evidence Bundle Format
+
+Each scenario run should capture:
+
+- scenario ID
+- start and end time
+- machine identity
+- logged-in user
+- commands executed
+- process events observed
+- flow events observed
+- DNS events observed
+- detection findings
+- missing expected events
+- screenshots or API responses where useful
+- tool versions
+
+## Acceptance Criteria
+
+- A tester can run a scenario and produce a comparable evidence bundle.
+- Expected vs observed telemetry is easy to review.
+- Harness can confirm whether required process/flow/DNS/detection events appeared.
+- Results can be used to tune detection without rerunning everything manually.
+
+## Dependencies
+
+- WO-VIS-001
+- WO-VIS-002
+- WO-VIS-003
+- WO-VIS-007
+
+## Risks
+
+- Fully automated browser/IDE scenarios may be brittle. Allow manual step capture for v1.
+- External service dependencies can make test results inconsistent. Provide local mock endpoints where feasible.
+
+## Completion Evidence
+
+- Scenario runner scripts
+- At least three captured evidence bundles
+- Expected-vs-observed report

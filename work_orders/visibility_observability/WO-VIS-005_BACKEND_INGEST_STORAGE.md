@@ -1,6 +1,6 @@
 # WO-VIS-005: Backend Ingest and Storage
 
-**Status:** Draft  
+**Status:** Initial HTTP ingest complete  
 **Phase:** Visibility and Observability  
 **Primary owner:** Backend  
 
@@ -16,6 +16,11 @@ This work order covers ingest and persistence for visibility events. It does not
 
 - Ingest endpoint or message bus consumer for v1 visibility events
 - Schema validation
+- Initial HTTP JSONL ingest endpoint:
+  - `POST /v1/visibility/events`
+  - accepts newline-delimited visibility events from the Windows agent spool
+  - maps visibility envelopes into the existing ingest `Event` shape
+  - publishes accepted events to `events.raw`
 - Durable storage for:
   - agent heartbeat
   - process events
@@ -35,8 +40,8 @@ This work order covers ingest and persistence for visibility events. It does not
 
 ## Acceptance Criteria
 
-- Backend accepts valid v1 visibility events.
-- Backend rejects or quarantines invalid events with a useful error.
+- Backend accepts valid v1 visibility events. **Initial endpoint complete.**
+- Backend rejects or quarantines invalid events with a useful error. **Initial HTTP 400 handling complete.**
 - Re-sending the same event does not create duplicate investigation records.
 - Query can reconstruct a simple path:
   - device -> user -> parent process -> process -> destination -> DNS/domain -> detection
@@ -53,7 +58,21 @@ This work order covers ingest and persistence for visibility events. It does not
 
 ## Completion Evidence
 
-- Ingest API or consumer documented
-- Example curl or producer command
+- Ingest API or consumer documented in `aegisflux/backend/ingest/README.md`
+- Example producer command:
+  ```bash
+  curl -sS -X POST --data-binary @events.jsonl http://localhost:9090/v1/visibility/events
+  ```
+- Unit tests:
+  - `go test ./internal/validate ./internal/server`
+  - `go test ./cmd/ingest`
 - Stored event query examples
 - Invalid event handling example
+
+## Remaining Work
+
+- Add durable storage tables or Timescale mapping for normalized visibility records.
+- Add deduplication by `event_id`.
+- Add a dead-letter path for invalid events.
+- Add authenticated agent-to-ingest transport.
+- Add query APIs for device/process/time-range investigation.

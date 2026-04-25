@@ -39,16 +39,15 @@ Archive here:
 - Superseded plans
 - Old implementation reports
 - Consolidation artifacts that are no longer current
+- Transitional docs after the durable pieces have moved into `aegisflux/` or `clarion/`
 
 ## Active Structure
 
 - `plans/` - Current cross-project plans.
 - `work_orders/` - Executable work orders for active development phases.
-- `agent/` - Historical or transitional agent documentation.
-- `backend/` - Historical or transitional backend documentation.
-- `integration/` - Historical or transitional API/integration documentation.
 - `archive/` - Old, completed, or superseded documents.
-- `CONSOLIDATION_PLAN.md` - Historical documentation consolidation plan.
+- `archive/legacy_workspace/` - Former top-level transitional agent, backend, integration, and consolidation docs.
+- `aegisflux.code-workspace` - Local VS Code workspace helper for opening this coordination repo beside `../aegisflux/`.
 
 ## Near-Term Direction
 
